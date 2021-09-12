@@ -1,5 +1,5 @@
 ## Title: PancakeUI
-## Version: v0.4-alpha
+## Version: v0.5-alpha
 ## Notes: A simple, modern UI replacement add-on.
 ## Author: Hurubon
 
@@ -12,8 +12,10 @@
 
 Libraries\WowColor.lua
 
+Assets\Fonts\Fonts.xml
+
 PnkUI.xml
 PnkUI.lua
-
 Components\Minimap\Minimap.lua
+Components\Minimap\Sidebar.lua
 Components\Minimap\ZoneTextFrame.lua

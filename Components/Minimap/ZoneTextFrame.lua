@@ -59,7 +59,9 @@ end
 function zone_text_frame.AddZoneText(self)
         self.text = self:CreateFontString(nil, "ARTWORK");
 
-        self.text:SetFontObject(PnkUISettings.fonts.normal);
+        self.text:SetFontObject(PnkUISettings.font_objects.normal);
+
+        self.text:SetHeight(12);
         self.text:SetPoint("CENTER");
         self.text:SetJustifyH("CENTER");
         self.text:SetJustifyV("MIDDLE");
@@ -75,6 +77,7 @@ function zone_text_frame.HookZoneEvents(self)
         end);
 end
 
+------------------------------ 「 Update method 」 ------------------------------
 function zone_text_frame.Update(self)
         local padding  = MINIMAP_SETTINGS.zone_text_frame.padding;
         local backdrop = MINIMAP_SETTINGS.zone_text_frame.backdrop;
@@ -92,6 +95,7 @@ function zone_text_frame.Update(self)
         self:SetWidth(width + (padding.left or 0) + (padding.right or 0));
 end
 
+---------------------------------- 「 Setup 」 ----------------------------------
 zone_text_frame:AddZoneText();
 zone_text_frame:HookZoneEvents();
 zone_text_frame:Update();

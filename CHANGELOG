@@ -1,3 +1,8 @@
+v0.5-alpha
+    - Added custom font (Arimo)
+    - Added minimap sidebar
+    - Changed project layout
+
 v0.4-alpha
     - Added minimap zone text
     - Added minimap zoom scrolling
