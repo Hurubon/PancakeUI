@@ -1,5 +1,5 @@
 ## Title: PancakeUI
-## Version: v0.3-alpha
+## Version: v0.4-alpha
 ## Notes: A simple, modern UI replacement add-on.
 ## Author: Hurubon
 
@@ -16,3 +16,4 @@ PnkUI.xml
 PnkUI.lua
 
 Components\Minimap\Minimap.lua
+Components\Minimap\ZoneTextFrame.lua

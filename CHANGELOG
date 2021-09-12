@@ -1,3 +1,9 @@
+v0.4-alpha
+    - Added minimap zone text
+    - Added minimap zoom scrolling
+    - Added minimap zoom sounds
+    - Changed logic in PnkUI.AddComponent
+
 v0.3-alpha
     - Added Minimap module
     - Added textures
