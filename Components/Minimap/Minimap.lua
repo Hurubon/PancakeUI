@@ -1,5 +1,7 @@
+--[[---------------------------------------------------------------------------
+        Settings
+--]]---------------------------------------------------------------------------
 PnkUISettings.minimap = PnkUISettings.minimap or {
-        is_enabled = true,
         dimensions = {
                 width  = 200,
                 height = 200,
@@ -13,9 +15,6 @@ PnkUISettings.minimap = PnkUISettings.minimap or {
         anchor = {
                 point         = "TOPRIGHT",
                 relativePoint = "TOPRIGHT",
-                relativeTo    = PnkUI,
-                offset_x      = 0,
-                offset_y      = 0,
         },
         backdrop = {
                 edgeFile = PnkUISettings.edge_path .. "MinimapEdge.tga",
@@ -28,11 +27,21 @@ PnkUISettings.minimap = PnkUISettings.minimap or {
                         left   = 4,
                 },
 
-                edge_color = PnkUISettings.colors.UI,
-                bg_color   = PnkUISettings.colors.UI, -- UNUSED
-        }
+                edgeColor = PnkUISettings.colors.UI,
+        },
+
+        sounds = {
+                is_zoom_sound_enabled = true,
+                zoom_in  = "igMiniMapZoomIn",
+                zoom_out = "igMiniMapZoomOut",
+        },
+
+        enable_mouse_wheel = true,
 };
 
+--[[---------------------------------------------------------------------------
+        Adding component
+--]]---------------------------------------------------------------------------
 local minimap = PnkUI.AddComponent({
         widget_type = "Frame",
         global_name = "PnkUI_Minimap",
@@ -40,11 +49,16 @@ local minimap = PnkUI.AddComponent({
         settings    = PnkUISettings.minimap,
 });
 
-if not minimap then return; end
+if minimap then
+        PnkUI.minimap = minimap;
+else
+        return;
+end
 
-PnkUI.minimap = minimap;
-
-function PnkUI.minimap.HideBlizzardWidgets(self, settings)
+--[[---------------------------------------------------------------------------
+        Methods
+--]]---------------------------------------------------------------------------
+function minimap.HideBlizzardWidgets(self, settings)
         local widgets = {
                 MinimapCluster,
                 MinimapBackdrop,
@@ -60,7 +74,7 @@ function PnkUI.minimap.HideBlizzardWidgets(self, settings)
         Minimap:SetMaskTexture("Interface\\ChatFrame\\ChatFrameBackground");
 end
 
-function PnkUI.minimap.EmbedBlizzardMinimap(self)
+function minimap.EmbedBlizzardMinimap(self)
         local dimensions = PnkUISettings.minimap.dimensions;
         local backdrop   = PnkUISettings.minimap.backdrop;
 
@@ -75,5 +89,28 @@ function PnkUI.minimap.EmbedBlizzardMinimap(self)
         Minimap:SetFrameLevel(0);
 end
 
-PnkUI.minimap:HideBlizzardWidgets();
-PnkUI.minimap:EmbedBlizzardMinimap();
+function minimap.EnableScrollWheelZoom(self)
+        local sounds = PnkUISettings.minimap.sounds;
+
+        self:EnableMouseWheel(PnkUISettings.minimap.enable_mouse_wheel);
+        self:SetScript("OnMouseWheel", function(self, direction)
+                local zoom = Minimap:GetZoom();
+
+                if zoom < Minimap:GetZoomLevels() and direction > 0 then
+                        if sounds.is_zoom_sound_enabled then
+                                PlaySound(sounds.zoom_in);
+                        end
+                        Minimap:SetZoom(zoom + 1)
+                elseif zoom > 0 and direction < 0 then
+                        if sounds.is_zoom_sound_enabled then
+                                PlaySound(sounds.zoom_out);
+                        end
+                        Minimap:SetZoom(zoom - 1);
+                end
+        end)
+end
+
+---------------------------------- 「 Setup 」 ----------------------------------
+minimap:HideBlizzardWidgets();
+minimap:EmbedBlizzardMinimap();
+minimap:EnableScrollWheelZoom();

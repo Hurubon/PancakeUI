@@ -14,10 +14,15 @@ PnkUISettings = PnkUISettings or {
                 hostile   = WowColor.FromHex("E6222F"),
                 sanctuary = WowColor.FromHex("00E8FC"),
         },
+
+        fonts = {
+                normal = GameFontNormal,
+        },
 };
 
 function PnkUI.AddComponent(component_data)
-        if not component_data.settings.is_enabled then
+        if component_data.settings.is_disabled or not component_data.parent
+        then
                 return nil;
         end
 
@@ -40,15 +45,21 @@ function PnkUI.AddComponent(component_data)
 
         component:SetPoint(
                 anchor.point,
-                anchor.relativeTo,
+                anchor.relativeTo or component:GetParent(),
                 anchor.relativePoint,
-                anchor.offset_x,
-                anchor.offset_y
+                anchor.offset_x or 0,
+                anchor.offset_y or 0
         );
 
         component:SetBackdrop(backdrop);
-        component:SetBackdropColor(backdrop.bg_color());
-        component:SetBackdropBorderColor(backdrop.edge_color());
+
+        if backdrop and backdrop.bgColor then
+                component:SetBackdropColor(backdrop.bgColor());
+        end
+
+        if backdrop and backdrop.edgeColor then
+                component:SetBackdropBorderColor(backdrop.edgeColor());
+        end
 
         return component;
 end
