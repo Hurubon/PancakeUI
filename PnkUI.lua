@@ -1,4 +1,5 @@
-local TEXTURE_PATH = "Interface\\AddOns\\PancakeUI\\Textures\\";
+local TEXTURE_PATH = "Interface\\AddOns\\PancakeUI\\Assets\\Textures\\";
+local FONT_PATH    = "Interface\\AddOns\\PancakeUI\\Assets\\Fonts\\";
 
 PnkUISettings = PnkUISettings or {
         bg_path   = TEXTURE_PATH .. "Background\\",
@@ -16,7 +17,16 @@ PnkUISettings = PnkUISettings or {
         },
 
         fonts = {
-                normal = GameFontNormal,
+                normal      = FONT_PATH .. "Arimo\\Regular.ttf",
+                bold        = FONT_PATH .. "Arimo\\Bold.ttf",
+                italic      = FONT_PATH .. "Arimo\\Italic.ttf",
+                bold_italic = FONT_PATH .. "Arimo\\BoldItalic.ttf",
+        },
+        font_objects = {
+                normal      = PnkUIFontNormal,
+                bold        = PnkUIFontBold,
+                italic      = PnkUIFontItalic,
+                bold_italic = PnkUIFontBoldItalic
         },
 };
 
@@ -63,3 +73,6 @@ function PnkUI.AddComponent(component_data)
 
         return component;
 end
+
+-- DEBUG:
+UIParent:Hide();
